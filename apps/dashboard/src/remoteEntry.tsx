@@ -12,6 +12,18 @@ const metricTitleKeys: Record<string, string> = {
   "Taxa de Chargeback": "dashboard.metric.chargeback",
   "Saldo Disponível": "dashboard.metric.balance"
 };
+const agendaLabelKeys: Record<string, string> = {
+  "D+0 (Hoje)": "dashboard.agenda.today",
+  "D+1 (Amanhã)": "dashboard.agenda.tomorrow",
+  "Próximos 7 dias": "dashboard.agenda.next7"
+};
+const alertKeys: Record<string, { title: string; description: string; time: string }> = {
+  "Pico de transações recusadas": {
+    title: "dashboard.alert.declinesTitle",
+    description: "dashboard.alert.declinesCopy",
+    time: "dashboard.alert.declinesTime"
+  }
+};
 
 function metricIcon(title: string, locale: string, fallback?: string) {
   if (title === "Saldo Disponível" && locale === "en") return "B";
@@ -125,12 +137,12 @@ export default function DashboardRemote({ navigate }: RemoteProps) {
               <button
                 key={alert.title}
                 className="w-full rounded-lg border border-orange-200 bg-orange-50 p-5 text-left"
-                onClick={() => actions.runAction(alert.title, { description: alert.description, tone: "warning" })}
+                onClick={() => actions.runAction(t(alertKeys[alert.title]?.title ?? alert.title), { description: t(alertKeys[alert.title]?.description ?? alert.description), tone: "warning" })}
                 type="button"
               >
-                <strong className="text-mp-content-strong">{alert.title}</strong>
-                <p className="mb-1 text-mp-content-default">{alert.description}</p>
-                <small>{alert.time}</small>
+                <strong className="text-mp-content-strong">{t(alertKeys[alert.title]?.title ?? alert.title)}</strong>
+                <p className="mb-1 text-mp-content-default">{t(alertKeys[alert.title]?.description ?? alert.description)}</p>
+                <small>{t(alertKeys[alert.title]?.time ?? alert.time)}</small>
               </button>
             ))}
           </Panel>
@@ -154,7 +166,7 @@ export default function DashboardRemote({ navigate }: RemoteProps) {
               {dashboard.agenda.map((item) => (
                 <li key={item.label} className="grid grid-cols-[auto_1fr_auto] items-center gap-3 border-b border-slate-100 py-3 last:border-0">
                   <span className="size-2 rounded-full bg-mp-brand-secondary" />
-                  <span>{item.label}</span>
+                  <span>{t(agendaLabelKeys[item.label] ?? item.label)}</span>
                   <strong>{item.value}</strong>
                 </li>
               ))}
