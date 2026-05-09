@@ -1,0 +1,11 @@
+{
+  "name": "@merchant-portal/mfe-operations",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@merchant-portal/mock-data": "file:../../packages/mock-data",
+    "@merchant-portal/shared-ui": "file:../../packages/shared-ui",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+.verification/
+node_modules/
+dist/
+.next/
+apps/*/.next/
+.DS_Store

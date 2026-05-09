@@ -1,0 +1,9 @@
+{
+  "name": "@merchant-portal/design-system",
+  "private": true,
+  "type": "module",
+  "style": "./src/styles.css",
+  "exports": {
+    "./styles.css": "./src/styles.css"
+  }
+}

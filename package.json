@@ -1,0 +1,44 @@
+{
+  "name": "merchant-portal-mfes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo React 19 + TypeScript + Tailwind para microfrontends do Portal Merchant.",
+  "scripts": {
+    "dev": "vite --config apps/shell/vite.config.ts --host 127.0.0.1 --port 4173",
+    "dev:bff": "npm run dev -w @mp/bff",
+    "build": "tsc -p tsconfig.json --noEmit && vite build --config apps/shell/vite.config.ts",
+    "build:bff": "npm run build -w @mp/bff",
+    "preview": "vite preview --config apps/shell/vite.config.ts --host 127.0.0.1 --port 4173",
+    "validate": "node --experimental-strip-types tooling/validate.ts"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "lucide-react": "^0.468.0",
+    "next": "^15.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
+  },
+  "presentation": {
+    "designSystem": "https://github.com/tigelah/ds-merchant-portal",
+    "figmaSandbox": "https://www.figma.com/design/h1z1fDmx6Y8ZpE17lxn72M/Portal-Merchant-Screens-Sandbox",
+    "runtime": "vite-react-typescript-tailwind",
+    "productionRecommendation": "Vite + Module Federation or import-map remotes with CI-owned deploys"
+  }
+}

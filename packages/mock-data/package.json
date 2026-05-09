@@ -1,0 +1,8 @@
+{
+  "name": "@merchant-portal/mock-data",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
