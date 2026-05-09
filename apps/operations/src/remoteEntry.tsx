@@ -156,7 +156,7 @@ export default function OperationsRemote() {
                       onClick={() => openDetails(transaction)}
                       type="button"
                     >
-                      {t("operations.details")}
+                      {t("operations.action.details")}
                     </button>
                   </div>
                 ) : null}

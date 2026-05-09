@@ -50,6 +50,7 @@ type PortalActions = {
   runAction: (label: string, options?: ActionOptions) => void;
   randomizeReceivables: () => Promise<void>;
   selectReportTemplate: (title: string) => void;
+  dismissToast: () => void;
   track: (event: string, payload?: Record<string, unknown>) => void;
 };
 
@@ -109,9 +110,15 @@ const pt = {
   "dashboard.advanceReceivables": "Antecipar Recebíveis",
   "dashboard.latestTransactions": "Últimas Transações",
   "dashboard.dragHelp": "Arraste os cards para reorganizar sua visão.",
+  "dashboard.metric.gmv": "Volume Total (GMV)",
+  "dashboard.metric.transactions": "Transações",
+  "dashboard.metric.approval": "Taxa de Aprovação",
+  "dashboard.metric.chargeback": "Taxa de Chargeback",
+  "dashboard.metric.balance": "Saldo Disponível",
   "operations.title": "Transações",
   "operations.subtitle": "Gerencie e monitore todas as transações da sua operação.",
   "operations.details": "Detalhes da Transação",
+  "operations.action.details": "Detalhes",
   "operations.exportCsv": "Exportar CSV",
   "operations.volumeToday": "Volume Hoje",
   "operations.approved": "Aprovadas",
@@ -287,9 +294,15 @@ const translations: Record<Locale, Record<string, string>> = {
     "dashboard.advanceReceivables": "Advance Receivables",
     "dashboard.latestTransactions": "Latest Transactions",
     "dashboard.dragHelp": "Drag cards to reorder your view.",
+    "dashboard.metric.gmv": "Total Volume (GMV)",
+    "dashboard.metric.transactions": "Transactions",
+    "dashboard.metric.approval": "Approval Rate",
+    "dashboard.metric.chargeback": "Chargeback Rate",
+    "dashboard.metric.balance": "Available Balance",
     "operations.title": "Transactions",
     "operations.subtitle": "Manage and monitor every transaction in your operation.",
     "operations.details": "Transaction Details",
+    "operations.action.details": "Details",
     "operations.exportCsv": "Export CSV",
     "operations.volumeToday": "Today Volume",
     "operations.approved": "Approved",
@@ -454,9 +467,15 @@ const translations: Record<Locale, Record<string, string>> = {
     "dashboard.advanceReceivables": "Anticipar Cobranzas",
     "dashboard.latestTransactions": "Últimas Transacciones",
     "dashboard.dragHelp": "Arrastra las tarjetas para reorganizar tu vista.",
+    "dashboard.metric.gmv": "Volumen Total (GMV)",
+    "dashboard.metric.transactions": "Transacciones",
+    "dashboard.metric.approval": "Tasa de Aprobación",
+    "dashboard.metric.chargeback": "Tasa de Chargeback",
+    "dashboard.metric.balance": "Saldo Disponible",
     "operations.title": "Transacciones",
     "operations.subtitle": "Gestiona y monitorea todas las transacciones de tu operación.",
     "operations.details": "Detalles de la Transacción",
+    "operations.action.details": "Detalles",
     "operations.volumeToday": "Volumen Hoy",
     "operations.approved": "Aprobadas",
     "operations.averageTicket": "Ticket Medio",
@@ -777,6 +796,9 @@ export function PortalProvider({ children }: { children: ReactNode }) {
         }));
         track("report.template.selected", { title });
         announce("Modelo selecionado", title, "success");
+      },
+      dismissToast() {
+        setState((current) => ({ ...current, toast: null }));
       },
       track
     }),

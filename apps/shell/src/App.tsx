@@ -15,7 +15,8 @@ import {
   Settings,
   Sun,
   UsersRound,
-  WalletCards
+  WalletCards,
+  X
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -424,15 +425,34 @@ function AccessibilityMenu() {
 
 function ToastAnnouncer() {
   const { accessibility, toast } = usePortalState();
+  const actions = usePortalActions();
+  const t = useT();
+
+  useEffect(() => {
+    if (!toast) return undefined;
+    const timeout = window.setTimeout(() => actions.dismissToast(), 2000);
+    return () => window.clearTimeout(timeout);
+  }, [actions, toast]);
+
   if (!toast) return null;
 
   return (
     <>
       {accessibility.textAlerts ? <div className="mp-sr-status" aria-live="polite">{toast.title}. {toast.description}</div> : null}
-      <output className="fixed bottom-6 right-6 z-50 max-w-sm rounded-xl border border-mp-border-subtle bg-white p-4 text-sm text-mp-content-default shadow-md" role="status">
-        <strong className="block text-mp-content-strong">{toast.title}</strong>
-        <span>{toast.description}</span>
-      </output>
+      <div className="fixed right-6 top-6 z-50 grid max-w-sm grid-cols-[1fr_auto] gap-3 rounded-xl border border-mp-border-subtle bg-white p-4 text-sm text-mp-content-default shadow-md" role="status">
+        <output>
+          <strong className="block text-mp-content-strong">{toast.title}</strong>
+          <span>{toast.description}</span>
+        </output>
+        <button
+          aria-label={t("shell.close")}
+          className="grid size-7 place-items-center rounded-md border border-mp-border-subtle bg-white text-mp-content-muted hover:text-mp-content-strong"
+          onClick={actions.dismissToast}
+          type="button"
+        >
+          <X className="size-4" />
+        </button>
+      </div>
     </>
   );
 }

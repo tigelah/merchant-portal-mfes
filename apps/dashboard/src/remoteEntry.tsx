@@ -5,9 +5,21 @@ import { Button, CardHeading, LineChart, MetricCard, Page, PageHeader, Panel, ty
 
 export const routes = ["/"];
 const metricOrderStorageKey = "mp.dashboard.metricOrder";
+const metricTitleKeys: Record<string, string> = {
+  "Volume Total (GMV)": "dashboard.metric.gmv",
+  "Transações": "dashboard.metric.transactions",
+  "Taxa de Aprovação": "dashboard.metric.approval",
+  "Taxa de Chargeback": "dashboard.metric.chargeback",
+  "Saldo Disponível": "dashboard.metric.balance"
+};
+
+function metricIcon(title: string, locale: string, fallback?: string) {
+  if (title === "Saldo Disponível" && locale === "en") return "B";
+  return fallback ?? title.slice(0, 1);
+}
 
 export default function DashboardRemote({ navigate }: RemoteProps) {
-  const { dashboard, busyAction } = usePortalState();
+  const { dashboard, busyAction, locale } = usePortalState();
   const actions = usePortalActions();
   const t = useT();
   const [metricOrder, setMetricOrder] = useState<string[]>(() => {
@@ -89,7 +101,9 @@ export default function DashboardRemote({ navigate }: RemoteProps) {
           >
             <MetricCard
               {...metric}
-              onPress={() => actions.runAction(metric.title, { description: `Drill-down mockado para ${metric.title}.` })}
+              icon={metricIcon(metric.title, locale, metric.icon)}
+              title={t(metricTitleKeys[metric.title] ?? metric.title)}
+              onPress={() => actions.runAction(t(metricTitleKeys[metric.title] ?? metric.title), { description: `Drill-down mockado para ${t(metricTitleKeys[metric.title] ?? metric.title)}.` })}
             />
           </div>
         ))}
